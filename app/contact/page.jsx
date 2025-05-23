@@ -132,7 +132,7 @@ const Contact = () => {
                 type="submit"
                 size="md"
                 className="max-w-40"
-                loading={true}
+                loading={loading}
               >
                 Send message
               </Button>

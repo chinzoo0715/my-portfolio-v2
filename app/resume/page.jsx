@@ -134,8 +134,29 @@ import {
   TooltipTrigger,
 } from '@/components/ui/tooltip';
 
-import { ScrollArea } from '@/components/ui/scroll-area';
 import { motion } from 'framer-motion';
+
+// Custom scrollbar styles
+const scrollbarStyles = `
+  @media (min-width: 768px) {
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 6px;
+    }
+    
+    .custom-scrollbar::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background-color: rgba(255, 255, 255, 0.2);
+      border-radius: 20px;
+    }
+    
+    .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+      background-color: rgba(255, 255, 255, 0.3);
+    }
+  }
+`;
 
 const Resume = () => {
   return (
@@ -147,7 +168,9 @@ const Resume = () => {
       }}
       className="flex min-h-[80vh] items-center justify-center py-12 xl:py-0"
     >
-      <div className="container mx-auto">
+      {/* Add custom scrollbar styles */}
+      <style jsx global>{scrollbarStyles}</style>
+      <div className="container mx-auto px-4">
         <Tabs
           defaultValue="experience"
           className="flex flex-col gap-[60px] xl:flex-row"
@@ -159,42 +182,40 @@ const Resume = () => {
           </TabsList>
 
           {/* content */}
-          <div className="min-h-[70vh] w-full">
+          <div className="w-full">
             {/* experience */}
             <TabsContent value="experience" className="w-full">
-              <div className="flex flex-col gap-[30px] text-center xl:text-left">
+              <div className="custom-scrollbar flex flex-col gap-[30px] overflow-y-auto text-center md:max-h-[60vh] xl:text-left">
                 <h3 className="text-4xl font-bold">{experience.title}</h3>
                 <p className="mx-auto max-w-[600px] text-white/60 xl:mx-0">
                   {experience.description}
                 </p>
-                <ScrollArea className="h-[400px]">
-                  <ul className="grid grid-cols-1 gap-[30px] lg:grid-cols-2">
-                    {experience.items.map((item, index) => {
-                      return (
-                        <li
-                          key={index}
-                          className="flex h-[184px] flex-col items-center justify-center gap-1 rounded-xl bg-[#232329] px-10 py-6 lg:items-start"
-                        >
-                          <span className="text-accent">{item.duration}</span>
-                          <h3 className="min-h-[60px] max-w-[260px] text-center text-xl lg:text-left">
-                            {item.position}
-                          </h3>
-                          <div className="flex items-center gap-3">
-                            {/* dot */}
-                            <span className="h-[6px] w-[6px] rounded-full bg-accent"></span>
-                            <p className="text-white/60">{item.company}</p>
-                          </div>
-                        </li>
-                      );
-                    })}
-                  </ul>
-                </ScrollArea>
+                <ul className="grid grid-cols-1 gap-[30px] lg:grid-cols-2">
+                  {experience.items.map((item, index) => {
+                    return (
+                      <li
+                        key={index}
+                        className="flex h-[184px] flex-col items-center justify-center gap-1 rounded-xl bg-[#232329] px-10 py-6 lg:items-start"
+                      >
+                        <span className="text-accent">{item.duration}</span>
+                        <h3 className="min-h-[60px] max-w-[260px] text-center text-xl lg:text-left">
+                          {item.position}
+                        </h3>
+                        <div className="flex items-center gap-3">
+                          {/* dot */}
+                          <span className="h-[6px] w-[6px] rounded-full bg-accent"></span>
+                          <p className="text-white/60">{item.company}</p>
+                        </div>
+                      </li>
+                    );
+                  })}
+                </ul>
               </div>
             </TabsContent>
 
             {/* skills */}
-            <TabsContent value="skills" className="h-full w-full">
-              <div className="flex flex-col gap-[30px]">
+            <TabsContent value="skills" className="w-full">
+              <div className="custom-scrollbar flex flex-col gap-[30px] overflow-y-auto md:max-h-[60vh]">
                 <div className="flex flex-col gap-[30px] text-center xl:text-left">
                   <h3 className="text-4xl font-bold">{skills.title}</h3>
                   <p className="mx-auto max-w-[600px] text-white/60 xl:mx-0">
@@ -229,7 +250,7 @@ const Resume = () => {
               value="about"
               className="w-full text-center xl:text-left"
             >
-              <div className="flex flex-col gap-[30px]">
+              <div className="custom-scrollbar flex flex-col gap-[30px] overflow-y-auto md:max-h-[60vh]">
                 <h3 className="text-4xl font-bold">{about.title}</h3>
                 <p className="mx-auto max-w-[600px] text-white/60 xl:mx-0">
                   {about.description}
